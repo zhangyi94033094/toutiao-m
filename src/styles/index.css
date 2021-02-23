@@ -72,3 +72,9 @@
 .iconzuopin:before {
   content: "\e614";
 }
+.page-nav-bar {
+  background-color: #3296fa !important;
+}
+.page-nav-bar .van-nav-bar__title {
+  color: #fff;
+}
