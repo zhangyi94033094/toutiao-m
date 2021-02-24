@@ -10,14 +10,14 @@
         name="用户名"
         placeholder="请输入手机号"
       >
-        <i slot="left-icon" class="toutiao toutiao-shouji"></i>
+        <i slot="left-icon" class="iconfont iconshouji"></i>
       </van-field>
       <van-field
         type="password"
         name="验证码"
         placeholder="请输入验证码"
       >
-        <i slot="left-icon" class="toutiao toutiao-yanzhengma"></i>
+        <i slot="left-icon" class="iconfont iconyanzhengma"></i>
         <template #button>
           <van-button class="send-sms-btn" round size="small" type="default">发送验证码</van-button>
         </template>
@@ -55,7 +55,7 @@ export default {
 
 <style scoped lang="less">
 .login-container {
-  .toutiao {
+  .iconfont {
     font-size: 37px;
   }
   .send-sms-btn {
