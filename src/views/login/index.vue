@@ -1,7 +1,9 @@
 <template>
   <div class="login-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" title="登录" />
+    <van-nav-bar class="page-nav-bar" title="登录" >
+     <van-icon v-if="$route.query.redirect" slot="left" name="cross" @click="$router.back()" />
+     </van-nav-bar>
     <!-- /导航栏 -->
 
     <!-- 登录表单 -->
@@ -115,6 +117,7 @@ export default {
         this.$store.commit('setUser', res.data.data)
         console.log('登录成功', res)
         this.$toast.success('登录成功')
+        this.$router.push(this.$route.query.redirect || '/')
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail('手机号或验证码错误')
@@ -135,6 +138,7 @@ export default {
       try {
         await sendSms(this.user.mobile)
         this.$toast('发送成功')
+        this.$router.back()
       } catch (err) {
         this.isCountDownShow = false
         if (err.response.status === 429) {
