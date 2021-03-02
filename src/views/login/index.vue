@@ -30,7 +30,7 @@
         <template #button>
           <van-count-down
             v-if="isCountDownShow"
-            :time="1000 * 5"
+            :time="1000 * 3"
             format="ss s"
             @finish="isCountDownShow = false"
           />
@@ -115,9 +115,8 @@ export default {
       try {
         const res = await login(user)
         this.$store.commit('setUser', res.data.data)
-        console.log('登录成功', res)
         this.$toast.success('登录成功')
-        this.$router.push(this.$route.query.redirect || '/')
+        this.$router.push(this.$route.query.redirect || '/my')
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail('手机号或验证码错误')
@@ -138,7 +137,6 @@ export default {
       try {
         await sendSms(this.user.mobile)
         this.$toast('发送成功')
-        this.$router.back()
       } catch (err) {
         this.isCountDownShow = false
         if (err.response.status === 429) {

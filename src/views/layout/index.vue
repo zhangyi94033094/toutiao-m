@@ -23,7 +23,8 @@
       </van-tabbar-item>
       <van-tabbar-item to="/my">
         <i slot="icon" class="iconfont iconwode"></i>
- <span class="text">{{ $store.state.user ? '我的' : '未登录' }}</span>      </van-tabbar-item>
+        <span class="text">{{ $store.state.user ? '我的' : '未登录' }}</span>
+      </van-tabbar-item>
     </van-tabbar>
     <!-- /标签导航栏 -->
   </div>
@@ -49,8 +50,8 @@ export default {
 <style scoped lang="less">
 .layout-container {
   .layout-tabbar {
-    i.toutiao {
-      font-size: 40px;
+    i.iconfont {
+      font-size: 40px !important;
     }
     span.text {
       font-size: 20px;

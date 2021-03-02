@@ -4,13 +4,8 @@
     <div v-if="user" class="header user-info">
       <div class="base-info">
         <div class="left">
-          <van-image
-            class="avatar"
-            round
-            fit="cover"
-            src="https://img.yzcdn.cn/vant/cat.jpeg"
-          />
-          <span class="name">黑马头条号</span>
+          <van-image class="avatar" round fit="cover" :src="userInfo.photo" />
+          <span class="name">{{ userInfo.name }}</span>
         </div>
         <div class="right">
           <van-button size="mini" round>编辑资料</van-button>
@@ -18,31 +13,27 @@
       </div>
       <div class="data-stats">
         <div class="data-item">
-          <span class="count">2</span>
+          <span class="count">{{ userInfo.art_count }}</span>
           <span class="text">头条</span>
         </div>
         <div class="data-item">
-          <span class="count">4</span>
+          <span class="count">{{ userInfo.follow_count }}</span>
           <span class="text">关注</span>
         </div>
         <div class="data-item">
-          <span class="count">6</span>
+          <span class="count">{{ userInfo.fans_count }}</span>
           <span class="text">粉丝</span>
         </div>
         <div class="data-item">
-          <span class="count">8</span>
+          <span class="count">{{ userInfo.like_count }}</span>
           <span class="text">获赞</span>
         </div>
       </div>
     </div>
     <!-- 未登录头部 -->
     <div v-else class="header not-login">
- <div class="login-btn" @click="$router.push({
-        name: 'login',
-        query: {
-          redirect: '/my'
-        }
-      })">        <img class="mobile-img" src="~@/assets/mobile.png" alt="" />
+      <div class="login-btn" @click="$router.push('/login')">
+        <img class="mobile-img" src="~@/assets/mobile.png" alt="" />
         <span class="text">登录 / 注册</span>
       </div>
     </div>
@@ -72,23 +63,46 @@
 
 <script>
 import { mapState } from 'vuex'
+import { getUserInfo } from '@/api/user'
 export default {
   name: 'MyIndex',
+  data () {
+    return {
+      userInfo: {}
+    }
+  },
   computed: {
     ...mapState(['user'])
+  },
+  created () {
+    // 如果用户登录了，才需要获取自己的信息
+    if (this.user) { // 例如在此页面用户把 token 清了，再刷新，防止调用接口
+      this.loadUserInfo()
+    }
   },
   methods: {
     onLogout () {
       // 提示
-      this.$dialog.confirm({
-        title: '确认退出吗？'
-      }).then(() => {
-        // 确认
-        // 清除登录状态（容器中的 user 和本地的 user）
-        this.$store.commit('setUser', null)
-      }).catch(() => {
-        // 关闭
-      })
+      this.$dialog
+        .confirm({
+          title: '确认退出吗？'
+        })
+        .then(() => {
+          // 确认
+          // 清除登录状态（容器中的 user 和本地的 user）
+          this.$store.commit('setUser', null)
+        })
+        .catch(() => {
+          // 关闭
+        })
+    },
+    async loadUserInfo () {
+      try {
+        const { data } = await getUserInfo()
+        this.userInfo = data.data
+      } catch (err) {
+        this.$toast('获取数据失败，请稍后重试')
+      }
     }
   }
 }
