@@ -8,7 +8,7 @@
           <span class="name">{{ userInfo.name }}</span>
         </div>
         <div class="right">
-          <van-button size="mini" round>编辑资料</van-button>
+          <van-button size="mini" round to="/user/profile">编辑资料</van-button>
         </div>
       </div>
       <div class="data-stats">
@@ -76,7 +76,7 @@ export default {
   },
   created () {
     // 如果用户登录了，才需要获取自己的信息
-    if (this.user) { // 例如在此页面用户把 token 清了，再刷新，防止调用接口
+    if (this.user) {
       this.loadUserInfo()
     }
   },
@@ -115,6 +115,7 @@ export default {
     background: url('~@/assets/banner.png');
     background-size: cover;
   }
+
   .not-login {
     display: flex;
     justify-content: center;
@@ -135,6 +136,7 @@ export default {
       }
     }
   }
+
   .user-info {
     .base-info {
       height: 231px;
@@ -177,6 +179,7 @@ export default {
       }
     }
   }
+
   .grid-nav {
     .grid-item {
       height: 141px;
@@ -194,10 +197,12 @@ export default {
       }
     }
   }
+
   .logout-cell {
     text-align: center;
     color: #d86262;
   }
+
   .mb-9 {
     margin-bottom: 9px;
   }
